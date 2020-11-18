@@ -5,6 +5,8 @@ import java.util.*;
 public class CourseGrades {
     private final String course;
     private final Map<String, StudentGrade> results;
+    private Statistic statistic;
+    private GradeSorting gradeSorting;
 
     /**
      * Instanciates a new course with empty list of grades.
@@ -12,7 +14,8 @@ public class CourseGrades {
      */
     public CourseGrades(String course) {
         this.course = course;
-        results = new HashMap<>();
+        this.results = new HashMap<>();
+        this.statistic = new StatisticAverage();
     }
 
     /**
@@ -85,8 +88,33 @@ public class CourseGrades {
      */
     public Collection<StudentGrade> list() {
         List<StudentGrade> list = new ArrayList<>( results.values() );
-        list.sort((g1, g2) -> g1.getName().compareToIgnoreCase(g2.getName()));
+        //list.sort((g1, g2) -> g1.getName().compareToIgnoreCase(g2.getName()));
+        this.gradeSorting.sort(list);
         return list;
+    }
+
+    /**
+     * Changes the statistic attribute currently used.
+     * @param s The new statistic to be used.
+     */
+    public void changeStatistic(Statistic s){
+        this.statistic = s;
+    }
+
+    /**
+     * Calculates the set statistic operation at 'statistic'.
+     * @return the calculated value.
+     */
+    public double computeStatistic(){
+        return statistic.compute((ArrayList)(this.list()));
+    }
+
+    /**
+     * Change the grade sorting strategy.
+     * @param gs The new grade sorting instance.
+     */
+    public void changeGradeSorting(GradeSorting gs){
+        this.gradeSorting = gs;
     }
 
     /**

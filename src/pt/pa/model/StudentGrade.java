@@ -7,7 +7,7 @@ import java.util.Objects;
  *
  * For all purposes, two students are considered the same ("equals" criteria) if they have the same ID.
  */
-public class StudentGrade {
+public class StudentGrade implements Comparable {
 
     private final String id;
     private final String name;
@@ -61,5 +61,23 @@ public class StudentGrade {
                 ", name='" + name + '\'' +
                 ", grade=" + grade +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object oGrade) {
+        if (oGrade.getClass().equals(this.getClass())){
+            StudentGrade otherGrade = (StudentGrade) oGrade;
+            if (this.getGrade() > otherGrade.getGrade()) {
+                return 1;
+            }
+            else if (this.getGrade() < otherGrade.getGrade()) {
+                return -1;
+            }
+            return 0;
+        }
+        else {
+            throw new IllegalArgumentException("Not of the same class!");
+        }
+
     }
 }

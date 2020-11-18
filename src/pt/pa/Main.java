@@ -1,15 +1,25 @@
 package pt.pa;
 
-import pt.pa.model.CourseGrades;
-import pt.pa.model.StudentGrade;
+import pt.pa.model.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
         CourseGrades grades = generate_example();
-
+        grades.changeGradeSorting(new GradeSortByGradeValue());
         System.out.println(grades);
+
+        System.out.println("\nAverage Grade: " + grades.computeStatistic());
+
+        grades.changeStatistic(new StatisticHighestGrade());
+        System.out.println("\nHighest Grade: " + grades.computeStatistic());
+
+        grades.changeStatistic(new StatisticLowestGrade());
+        System.out.println("\nLowest Grade: " + grades.computeStatistic());
+
+        grades.changeStatistic(new StatisticMedium());
+        System.out.println("\nMedian: " + grades.computeStatistic());
 
     }
 
